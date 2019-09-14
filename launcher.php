@@ -4,7 +4,15 @@ Template Name:Launcher Homepage
 */
 ?>
 	<?php the_post(); ?>
-	<?php get_header(); ?>
+	<?php get_header(); 
+	$placeholder_text = get_post_meta(get_the_id(),"placeholder", true);
+	$hints = get_post_meta(get_the_id(),"hints", true);
+	$button_label = get_post_meta(get_the_id(),"button label", true);
+	/*
+	echo $placeholder_text;
+	die();
+	*/
+	?>
 	<body <?php body_class(); ?>>
 	<div class="fh5co-loader"></div>
 
@@ -33,9 +41,9 @@ Template Name:Launcher Homepage
 							<div class="col-lg-7 animate-box">
 								<form action="#" id="fh5co-subscribe">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Enter your email">
-										<input type="submit" value="Send" class="btn btn-primary">
-										<p class="tip">Please enter your email address for early access.</p>
+										<input type="text" class="form-control" placeholder="<?php echo esc_attr($placeholder_text); ?>">
+										<input type="submit" value="<?php echo esc_attr($button_label); ?>" class="btn btn-primary">
+										<p class="tip"><?php echo esc_html($hints); ?></p>
 									</div>
 								</form>
 							</div>
