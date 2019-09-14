@@ -1,5 +1,5 @@
 /*
-Theme Name: Launcher
+Theme Name: Launcher OLD
 Theme URI: www.launcher.com
 Author: S M Morshed
 Author URI: www.skmorshed75.com
@@ -12,3 +12,10 @@ Text Domain: launcher
 
 
 */
+
+h1#fh5co-logo a {
+    color: #222 !important;
+    font-size: 50px;
+    margin-top: 30px;
+    display: block;
+}

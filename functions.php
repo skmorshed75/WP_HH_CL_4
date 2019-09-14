@@ -51,4 +51,19 @@ function launcher_sidebars(){
 }
 add_action("widgets_init","launcher_sidebars");
 
+
+function launcher_styles(){
+	if(is_page()){
+		$thumbnail_url = get_the_post_thumbnail_url(null, "large");
+		?>
+		<style>
+			.home-side {
+				background-image: url(<?php echo $thumbnail_url; ?>);
+			}
+		</style>
+		<?php
+	}	
+}
+add_action("wp_head", "launcher_styles");
 ?>
+
