@@ -8,27 +8,43 @@ function launcher_setup_theme(){
 add_action("after_setup_theme", "launcher_setup_theme");
 
 function launcher_assets(){
-	wp_enqueue_style("launcher",get_stylesheet_uri());
-	wp_enqueue_style("animate",get_theme_file_uri("/assets/css/animate.css"));
-	wp_enqueue_style("icomoon",get_theme_file_uri("/assets/css/icomoon.css"));
-	wp_enqueue_style("bootstrap",get_theme_file_uri("/assets/css/bootstrap.css"));
-	wp_enqueue_style("style",get_theme_file_uri("/assets/css/style.css"));
+	/*
+	echo get_page_template();
+	echo '</br>';
+	echo basename(get_page_template());
+	die();
+	*/
 	
-	wp_enqueue_script("easing-jquery-js", get_theme_file_uri("/assets/js/jquery.easing.1.3.js"),array("jquery"),"0.01", true);
-	wp_enqueue_script("bootstrap-jquery-js",get_theme_file_uri("/assets/js/bootstrap.min.js"),array("jquery"), "0.01", true);
-	wp_enqueue_script("waypoints-jquery-js",get_theme_file_uri("/assets/js/jquery.waypoints.min.js"), array("jquery"), "0.01", true);
-	wp_enqueue_script("countdown-jquery-js", get_theme_file_uri("/assets/js/simplyCountdown.js"), array('jquery'), time(), true);
-	wp_enqueue_script("main-jquery-js", get_theme_file_uri("/assets/js/main.js"), array('jquery'), time(),  true);
+	if(is_page()){
+		$launcher_template_name = basename(get_page_template());
+		if($launcher_template_name == "launcher.php"){
+			wp_enqueue_style("launcher",get_stylesheet_uri());
+			wp_enqueue_style("animate",get_theme_file_uri("/assets/css/animate.css"));
+			wp_enqueue_style("icomoon",get_theme_file_uri("/assets/css/icomoon.css"));
+			wp_enqueue_style("bootstrap",get_theme_file_uri("/assets/css/bootstrap.css"));
+			wp_enqueue_style("style",get_theme_file_uri("/assets/css/style.css"));
+
+			wp_enqueue_script("easing-jquery-js", get_theme_file_uri("/assets/js/jquery.easing.1.3.js"),array("jquery"),"0.01", true);
+			wp_enqueue_script("bootstrap-jquery-js",get_theme_file_uri("/assets/js/bootstrap.min.js"),array("jquery"), "0.01", true);
+			wp_enqueue_script("waypoints-jquery-js",get_theme_file_uri("/assets/js/jquery.waypoints.min.js"), array("jquery"), "0.01", true);
+			wp_enqueue_script("countdown-jquery-js", get_theme_file_uri("/assets/js/simplyCountdown.js"), array('jquery'), time(), true);
+			wp_enqueue_script("main-jquery-js", get_theme_file_uri("/assets/js/main.js"), array('jquery'), time(),  true);
+
+			//class 4.3
+			$launcher_year = get_post_meta(get_the_id(),"year", true);
+			$launcher_month = get_post_meta(get_the_id(),"month", true);
+			$launcher_day = get_post_meta(get_the_id(),"day", true);
+			wp_localize_script("main-jquery-js", "datedata", array(
+				'year'	=> $launcher_year,
+				'month'	=> $launcher_month,
+				'day'	=> $launcher_day,
+			));
+		} else {
+			wp_enqueue_style("bootstrap",get_theme_file_uri("/assets/css/bootstrap.css"));
+			wp_enqueue_style("style",get_theme_file_uri("/assets/css/style.css"));						
+		}
+	}
 	
-	//class 4.3
-	$launcher_year = get_post_meta(get_the_id(),"year", true);
-	$launcher_month = get_post_meta(get_the_id(),"month", true);
-	$launcher_day = get_post_meta(get_the_id(),"day", true);
-	wp_localize_script("main-jquery-js", "datedata", array(
-		'year'	=> $launcher_year,
-		'month'	=> $launcher_month,
-		'day'	=> $launcher_day,
-	));
 }
 add_action("wp_enqueue_scripts", "launcher_assets");
 
